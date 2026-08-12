@@ -16,60 +16,67 @@
 
     html, body {
       width: 100%;
-      min-height: 100%;
+      height: 100%;
       background: #f4ecdf;
       font-family: Arial, sans-serif;
-    }
-
-    body {
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     .invitation {
       width: 100%;
       max-width: 500px;
-      min-height: 100vh;
+      height: 100vh;
       margin: auto;
       position: relative;
-      background: #f4ecdf;
       overflow: hidden;
+      background: #f4ecdf;
     }
 
-    /* الصفحات */
     .page {
-      display: none;
+      position: absolute;
+      inset: 0;
+
       width: 100%;
-      min-height: 100vh;
-      position: relative;
+      height: 100%;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transform: translateY(100%);
+
+      transition:
+        transform 0.75s ease,
+        opacity 0.65s ease,
+        visibility 0.75s;
     }
 
     .page.active {
-      display: block;
-      animation: fadeIn 0.5s ease;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      z-index: 5;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
+    .page.above {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-100%);
     }
 
-    /* الصور */
+    .page.below {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(100%);
+    }
+
     .page-image {
-      display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     /* الغلاف */
-    #coverPage {
-      cursor: pointer;
-    }
-
     .open-cover {
       position: absolute;
       inset: 0;
@@ -79,73 +86,6 @@
       background: transparent;
       cursor: pointer;
       z-index: 20;
-    }
-
-    /* الأسهم */
-    .arrow {
-      position: fixed;
-      bottom: 22px;
-      z-index: 1000;
-
-      width: 48px;
-      height: 48px;
-
-      border-radius: 50%;
-      border: 1px solid rgba(160, 115, 35, 0.45);
-
-      background: rgba(255, 248, 235, 0.95);
-      color: #94681b;
-
-      font-size: 27px;
-      cursor: pointer;
-
-      display: none;
-      align-items: center;
-      justify-content: center;
-
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
-    }
-
-    .arrow.visible {
-      display: flex;
-    }
-
-    #prev {
-      right: 18px;
-    }
-
-    #next {
-      left: 18px;
-    }
-
-    /* نقاط الصفحات */
-    .dots {
-      position: fixed;
-      bottom: 39px;
-      left: 50%;
-      transform: translateX(-50%);
-
-      z-index: 1000;
-
-      display: none;
-      gap: 9px;
-    }
-
-    .dots.visible {
-      display: flex;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #d5bd91;
-      transition: 0.25s;
-    }
-
-    .dot.active {
-      background: #986b1e;
-      transform: scale(1.4);
     }
 
     /* الموسيقى */
@@ -166,24 +106,93 @@
       color: #966b20;
 
       font-size: 21px;
-      cursor: pointer;
 
       display: none;
       align-items: center;
       justify-content: center;
 
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+
+      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
     }
 
     .music-button.visible {
       display: flex;
     }
 
-    /* زر الموقع الشفاف */
-    #countdownPage {
-      position: relative;
+    /* أزرار فوق وتحت */
+    .nav-button {
+      position: fixed;
+
+      left: 50%;
+      transform: translateX(-50%);
+
+      z-index: 1000;
+
+      width: 46px;
+      height: 46px;
+
+      border-radius: 50%;
+      border: 1px solid rgba(160,115,35,0.45);
+
+      background: rgba(255,248,235,0.95);
+      color: #94681b;
+
+      font-size: 24px;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      cursor: pointer;
+
+      box-shadow: 0 3px 12px rgba(0,0,0,0.16);
     }
 
+    .nav-button.visible {
+      display: flex;
+    }
+
+    #prev {
+      top: 18px;
+    }
+
+    #next {
+      bottom: 18px;
+    }
+
+    /* نقاط الصفحات */
+    .dots {
+      position: fixed;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      z-index: 1000;
+
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dots.visible {
+      display: flex;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d5bd91;
+      transition: 0.25s;
+    }
+
+    .dot.active {
+      background: #986b1e;
+      transform: scale(1.4);
+    }
+
+    /* زر الموقع الشفاف */
     .map-button {
       position: absolute;
 
@@ -206,7 +215,7 @@
       }
 
       .invitation {
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 0 25px rgba(0,0,0,0.08);
       }
     }
   </style>
@@ -217,9 +226,7 @@
 
   <main class="invitation">
 
-
-    <!-- الصفحة 1: الغلاف -->
-
+    <!-- 1 الغلاف -->
     <section class="page active" id="coverPage">
 
       <img
@@ -237,9 +244,8 @@
     </section>
 
 
-    <!-- الصفحة 2: العرس -->
-
-    <section class="page" id="weddingPage">
+    <!-- 2 العرس -->
+    <section class="page below" id="weddingPage">
 
       <img
         src="wedding.png"
@@ -250,9 +256,8 @@
     </section>
 
 
-    <!-- الصفحة 3: الحنة -->
-
-    <section class="page" id="hennaPage">
+    <!-- 3 الحنة -->
+    <section class="page below" id="hennaPage">
 
       <img
         src="حناء.png"
@@ -263,9 +268,8 @@
     </section>
 
 
-    <!-- الصفحة 4: الموقع والعد التنازلي -->
-
-    <section class="page" id="countdownPage">
+    <!-- 4 الموقع والعد التنازلي -->
+    <section class="page below" id="countdownPage">
 
       <img
         src="countdown.png"
@@ -283,7 +287,6 @@
 
 
     <!-- الموسيقى -->
-
     <audio id="music" loop preload="auto">
 
       <source
@@ -294,8 +297,6 @@
     </audio>
 
 
-    <!-- زر الموسيقى -->
-
     <button
       class="music-button"
       id="musicButton"
@@ -305,30 +306,27 @@
     </button>
 
 
-    <!-- زر السابق -->
-
+    <!-- زر للأعلى -->
     <button
-      class="arrow"
+      class="nav-button"
       id="prev"
       aria-label="الصفحة السابقة"
     >
-      ›
+      ↑
     </button>
 
 
-    <!-- زر التالي -->
-
+    <!-- زر للأسفل -->
     <button
-      class="arrow"
+      class="nav-button"
       id="next"
       aria-label="الصفحة التالية"
     >
-      ‹
+      ↓
     </button>
 
 
-    <!-- النقاط -->
-
+    <!-- نقاط الصفحات -->
     <div class="dots" id="dots">
 
       <span class="dot active"></span>
@@ -337,13 +335,10 @@
 
     </div>
 
-
   </main>
 
 
   <script>
-
-    /* الصفحات */
 
     const pages = [
       document.getElementById("coverPage"),
@@ -352,11 +347,8 @@
       document.getElementById("countdownPage")
     ];
 
-
     let currentPage = 0;
 
-
-    /* العناصر */
 
     const openCover =
       document.getElementById("openCover");
@@ -381,7 +373,6 @@
 
 
     /* فتح الدعوة */
-
     openCover.addEventListener("click", function () {
 
       showPage(1);
@@ -394,18 +385,31 @@
       music.volume = 0.45;
 
       music.play().catch(function () {
-        console.log("المتصفح منع تشغيل الموسيقى تلقائياً");
+        console.log("المتصفح منع تشغيل الموسيقى");
       });
 
     });
 
 
     /* عرض الصفحة */
-
     function showPage(pageNumber) {
 
-      pages.forEach(function (page) {
-        page.classList.remove("active");
+      pages.forEach(function (page, index) {
+
+        page.classList.remove(
+          "active",
+          "above",
+          "below"
+        );
+
+        if (index < pageNumber) {
+          page.classList.add("above");
+        }
+
+        if (index > pageNumber) {
+          page.classList.add("below");
+        }
+
       });
 
 
@@ -413,18 +417,12 @@
 
       currentPage = pageNumber;
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
       updateControls();
 
     }
 
 
-    /* التالي */
-
+    /* التالي = الكرت يطلع لفوق */
     nextButton.addEventListener("click", function () {
 
       if (currentPage < pages.length - 1) {
@@ -435,7 +433,6 @@
 
 
     /* السابق */
-
     prevButton.addEventListener("click", function () {
 
       if (currentPage > 1) {
@@ -445,8 +442,7 @@
     });
 
 
-    /* تحديث الأسهم والنقاط */
-
+    /* تحديث الأزرار والنقاط */
     function updateControls() {
 
       if (currentPage === 1) {
@@ -468,29 +464,26 @@
       });
 
 
-      const dotNumber = currentPage - 1;
+      const dotIndex = currentPage - 1;
 
-      if (dots[dotNumber]) {
-        dots[dotNumber].classList.add("active");
+      if (dots[dotIndex]) {
+        dots[dotIndex].classList.add("active");
       }
 
     }
 
 
-    /* تشغيل وإيقاف الموسيقى */
-
+    /* الموسيقى */
     musicButton.addEventListener("click", function () {
 
       if (music.paused) {
 
         music.play();
-
         musicButton.textContent = "♫";
 
       } else {
 
         music.pause();
-
         musicButton.textContent = "♪";
 
       }
@@ -498,8 +491,7 @@
     });
 
 
-    /* فتح الموقع */
-
+    /* الموقع */
     document
       .getElementById("mapButton")
       .addEventListener("click", function () {
@@ -512,17 +504,17 @@
       });
 
 
-    /* السحب بالموبايل */
+    /* السحب لفوق وتحت بالموبايل */
 
-    let touchStartX = 0;
+    let touchStartY = 0;
 
 
     document.addEventListener(
       "touchstart",
       function (event) {
 
-        touchStartX =
-          event.changedTouches[0].screenX;
+        touchStartY =
+          event.changedTouches[0].screenY;
 
       },
       { passive: true }
@@ -538,12 +530,12 @@
         }
 
 
-        const touchEndX =
-          event.changedTouches[0].screenX;
+        const touchEndY =
+          event.changedTouches[0].screenY;
 
 
         const difference =
-          touchEndX - touchStartX;
+          touchEndY - touchStartY;
 
 
         if (Math.abs(difference) < 60) {
@@ -551,13 +543,18 @@
         }
 
 
+        /* سحب لفوق */
         if (difference < 0) {
 
           if (currentPage < pages.length - 1) {
             showPage(currentPage + 1);
           }
 
-        } else {
+        }
+
+
+        /* سحب لتحت */
+        else {
 
           if (currentPage > 1) {
             showPage(currentPage - 1);
