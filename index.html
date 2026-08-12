@@ -10,363 +10,363 @@
 <style>
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html,body{
-  width:100%;
-  height:100%;
-  font-family:Arial,sans-serif;
-  background:#eee7dd;
+    width:100%;
+    height:100%;
+    background:#eee7dd;
+    font-family:Arial,sans-serif;
 }
 
 body{
-  overflow:hidden;
+    overflow:hidden;
 }
 
-/* الحاوية */
+/* الحاوية الرئيسية */
+
 .invitation{
-  width:100%;
-  max-width:500px;
-  height:100vh;
-  margin:auto;
-  position:relative;
+    width:100%;
+    max-width:500px;
+    height:100vh;
+    margin:auto;
 
-  overflow-y:auto;
-  overflow-x:hidden;
+    overflow-y:auto;
+    overflow-x:hidden;
 
-  scroll-snap-type:y mandatory;
-  scroll-behavior:smooth;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
 
-  background:#f4ecdf;
+    background:#f4ecdf;
 
-  scrollbar-width:none;
+    scrollbar-width:none;
 }
 
 .invitation::-webkit-scrollbar{
-  display:none;
+    display:none;
 }
 
-/* الصفحات */
+
+/* كل صفحة */
+
 .page{
-  position:relative;
-  width:100%;
-  height:100vh;
+    position:relative;
+    width:100%;
+    height:100vh;
 
-  scroll-snap-align:start;
-  scroll-snap-stop:always;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
 
-  overflow:hidden;
-  background:#f4ecdf;
+    overflow:hidden;
+    background:#f4ecdf;
 }
 
 .page img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 
+
 /* =========================
-   الغلاف
+   الصفحة الأولى - الغلاف
 ========================= */
 
 #coverPage{
-  position:relative;
-  z-index:50;
+    position:relative;
+    z-index:20;
 }
 
-/* صورة الظرف */
 .cover-image{
-  position:absolute;
-  inset:0;
+    position:absolute;
+    inset:0;
 
-  width:100%;
-  height:100%;
+    width:100%;
+    height:100%;
 
-  object-fit:cover;
+    object-fit:cover;
 
-  transition:
-    transform 1.15s cubic-bezier(.77,0,.18,1),
-    opacity .9s ease;
+    transition:
+        transform 1.2s cubic-bezier(.77,0,.18,1),
+        opacity .9s ease;
 }
 
-/* حركة فتح الظرف */
-#coverPage.open .cover-image{
-  transform:
-    translateY(-105%)
-    scale(.97);
 
-  opacity:0;
-}
+/* منطقة الضغط فوق الختم */
 
-/* منطقة الضغط على الختم */
 .seal-button{
-  position:absolute;
+    position:absolute;
 
-  left:50%;
-  top:52%;
+    left:50%;
+    top:52%;
 
-  transform:
-    translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
-  width:125px;
-  height:125px;
+    width:135px;
+    height:135px;
 
-  border:none;
-  border-radius:50%;
+    border:0;
+    border-radius:50%;
 
-  background:transparent;
+    background:transparent;
 
-  cursor:pointer;
-  z-index:100;
+    cursor:pointer;
+    z-index:30;
 }
 
-/* نبضة حول الختم */
+
+/* نبضة عند الضغط */
+
 .seal-pulse{
-  position:absolute;
+    position:absolute;
 
-  left:50%;
-  top:52%;
+    left:50%;
+    top:52%;
 
-  transform:
-    translate(-50%,-50%)
-    scale(.6);
+    transform:translate(-50%,-50%) scale(.5);
 
-  width:100px;
-  height:100px;
+    width:105px;
+    height:105px;
 
-  border-radius:50%;
+    border-radius:50%;
 
-  border:
-    2px solid rgba(191,142,58,.65);
+    border:2px solid rgba(180,130,45,.65);
 
-  opacity:0;
+    opacity:0;
 
-  pointer-events:none;
+    pointer-events:none;
 
-  z-index:90;
+    z-index:25;
 }
 
 #coverPage.preparing .seal-pulse{
-  animation:sealPulse .7s ease;
+    animation:sealPulse .7s ease;
 }
 
 @keyframes sealPulse{
 
-  0%{
-    opacity:0;
+    0%{
+        opacity:0;
+        transform:
+            translate(-50%,-50%)
+            scale(.5);
+    }
+
+    40%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.8);
+    }
+}
+
+
+/* فتح الغلاف للأعلى */
+
+#coverPage.open .cover-image{
+
     transform:
-      translate(-50%,-50%)
-      scale(.6);
-  }
+        translateY(-105%)
+        scale(.98);
 
-  40%{
-    opacity:.9;
-  }
-
-  100%{
     opacity:0;
-    transform:
-      translate(-50%,-50%)
-      scale(1.7);
-  }
-
 }
 
-/* =========================
-   بقية الصفحات
-========================= */
-
-#weddingPage{
-  opacity:.6;
-  transform:translateY(10%);
-
-  transition:
-    opacity .9s ease,
-    transform .9s ease;
-}
-
-body.opened #weddingPage{
-  opacity:1;
-  transform:translateY(0);
-}
 
 /* =========================
    زر الموسيقى
 ========================= */
 
 .music-button{
-  position:fixed;
 
-  top:18px;
-  right:18px;
+    position:fixed;
 
-  z-index:1000;
+    top:18px;
+    right:18px;
 
-  width:46px;
-  height:46px;
+    width:46px;
+    height:46px;
 
-  border-radius:50%;
+    border-radius:50%;
 
-  border:
-    1px solid rgba(168,122,39,.55);
+    border:
+        1px solid rgba(168,122,39,.55);
 
-  background:
-    rgba(255,248,236,.95);
+    background:
+        rgba(255,248,236,.95);
 
-  color:#94681c;
+    color:#94681c;
 
-  font-size:21px;
+    font-size:21px;
 
-  display:none;
+    display:none;
 
-  align-items:center;
-  justify-content:center;
+    align-items:center;
+    justify-content:center;
 
-  cursor:pointer;
+    cursor:pointer;
 
-  box-shadow:
-    0 4px 14px rgba(0,0,0,.14);
+    z-index:1000;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,.14);
 }
 
 .music-button.visible{
-  display:flex;
+    display:flex;
 }
 
+
 /* =========================
-   اسحب للأعلى
+   سهم السحب
 ========================= */
 
 .swipe-hint{
-  position:fixed;
 
-  bottom:17px;
-  left:50%;
+    position:fixed;
 
-  transform:translateX(-50%);
+    bottom:18px;
+    left:50%;
 
-  z-index:900;
+    transform:translateX(-50%);
 
-  display:none;
+    z-index:900;
 
-  flex-direction:column;
-  align-items:center;
+    display:none;
 
-  padding:7px 14px;
+    flex-direction:column;
+    align-items:center;
 
-  border-radius:25px;
+    padding:7px 14px;
 
-  background:
-    rgba(255,248,236,.9);
+    border-radius:25px;
 
-  color:#8c651f;
+    background:
+        rgba(255,248,236,.92);
 
-  font-size:12px;
+    color:#8c651f;
 
-  pointer-events:none;
+    font-size:12px;
 
-  animation:hintMove 1.4s infinite;
+    pointer-events:none;
+
+    animation:moveUp 1.3s infinite;
 }
 
 .swipe-hint.visible{
-  display:flex;
+    display:flex;
 }
 
 .swipe-hint strong{
-  font-size:21px;
-  font-weight:normal;
-  line-height:17px;
+    font-size:22px;
+    line-height:18px;
+    font-weight:normal;
 }
 
-@keyframes hintMove{
+@keyframes moveUp{
 
-  0%,100%{
-    transform:
-      translateX(-50%)
-      translateY(0);
-  }
+    0%,100%{
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
 
-  50%{
-    transform:
-      translateX(-50%)
-      translateY(-7px);
-  }
-
+    50%{
+        transform:
+            translateX(-50%)
+            translateY(-8px);
+    }
 }
+
 
 /* =========================
    نقاط الصفحات
 ========================= */
 
 .dots{
-  position:fixed;
 
-  right:13px;
-  top:50%;
+    position:fixed;
 
-  transform:translateY(-50%);
+    right:12px;
+    top:50%;
 
-  z-index:900;
+    transform:translateY(-50%);
 
-  display:none;
+    z-index:900;
 
-  flex-direction:column;
-  gap:9px;
+    display:none;
+
+    flex-direction:column;
+
+    gap:10px;
 }
 
 .dots.visible{
-  display:flex;
+    display:flex;
 }
 
 .dot{
-  width:8px;
-  height:8px;
 
-  border-radius:50%;
+    width:8px;
+    height:8px;
 
-  background:
-    rgba(142,101,29,.28);
+    border-radius:50%;
 
-  transition:.3s;
+    background:
+        rgba(142,101,29,.3);
+
+    transition:.3s;
 }
 
 .dot.active{
-  background:#95681c;
-  transform:scale(1.4);
+
+    background:#95681c;
+
+    transform:scale(1.5);
 }
+
 
 /* =========================
    زر الموقع
 ========================= */
 
 .map-button{
-  position:absolute;
 
-  left:27%;
-  width:46%;
+    position:absolute;
 
-  top:72%;
-  height:9%;
+    left:25%;
+    width:50%;
 
-  z-index:40;
+    top:71%;
+    height:11%;
 
-  border:none;
-  background:transparent;
+    border:none;
+    background:transparent;
 
-  cursor:pointer;
+    cursor:pointer;
+
+    z-index:50;
 }
 
+
 /* الكمبيوتر */
+
 @media(min-width:501px){
 
-  .invitation{
-    box-shadow:
-      0 0 30px rgba(0,0,0,.12);
-  }
+    .invitation{
 
+        box-shadow:
+            0 0 30px rgba(0,0,0,.12);
+    }
 }
 
 </style>
@@ -377,87 +377,95 @@ body.opened #weddingPage{
 
 
 <main
-class="invitation"
-id="invitation"
+    class="invitation"
+    id="invitation"
 >
 
 
-<!-- 1 الغلاف -->
+<!-- =====================
+     1 - الغلاف الجديد
+===================== -->
 
 <section
-class="page"
-id="coverPage"
+    class="page"
+    id="coverPage"
 >
 
-<img
-src="cover3.png"
-class="cover-image"
-alt="غلاف الدعوة"
->
+    <img
+        src="./cover3.png"
+        class="cover-image"
+        alt="غلاف الدعوة"
+    >
 
-<div
-class="seal-pulse">
-</div>
+    <div
+        class="seal-pulse">
+    </div>
 
-<button
-class="seal-button"
-id="openInvitation"
-aria-label="فتح الدعوة">
-</button>
+    <button
+        class="seal-button"
+        id="openInvitation"
+        aria-label="فتح الدعوة">
+    </button>
 
 </section>
 
 
 
-<!-- 2 العرس -->
+<!-- =====================
+     2 - صفحة العرس
+===================== -->
 
 <section
-class="page"
-id="weddingPage"
+    class="page"
+    id="weddingPage"
 >
 
-<img
-src="wedding.png"
-alt="معلومات حفل الزفاف"
->
+    <img
+        src="./wedding.png"
+        alt="دعوة حفل الزفاف"
+    >
 
 </section>
 
 
 
-<!-- 3 الحنة -->
+<!-- =====================
+     3 - صفحة الحنة
+===================== -->
 
 <section
-class="page"
-id="hennaPage"
+    class="page"
+    id="hennaPage"
 >
 
-<img
-src="hanna2.png"
-alt="ليلة الحنة"
->
+    <img
+        src="./hanna2.png"
+        alt="ليلة الحنة"
+    >
 
 </section>
 
 
 
-<!-- 4 العد التنازلي -->
+<!-- =====================
+     4 - العد التنازلي
+===================== -->
 
 <section
-class="page"
-id="countdownPage"
+    class="page"
+    id="countdownPage"
 >
 
-<img
-src="countdown.png"
-alt="العد التنازلي وموقع العرس"
->
+    <img
+        src="./countdown.png"
+        alt="العد التنازلي"
+    >
 
-<button
-class="map-button"
-id="mapButton"
-aria-label="فتح الموقع">
-</button>
+    <button
+        class="map-button"
+        id="mapButton"
+        aria-label="فتح الموقع">
+    </button>
 
 </section>
 
@@ -466,58 +474,63 @@ aria-label="فتح الموقع">
 
 
 
-<!-- الموسيقى -->
+<!-- =====================
+     الموسيقى الجديدة
+===================== -->
 
 <audio
-id="music"
-loop
-preload="auto"
+    id="music"
+    loop
+    preload="auto"
 >
 
-<source
-src="music35.mp3"
-type="audio/mpeg"
->
+    <source
+        src="./music35.mp3"
+        type="audio/mpeg"
+    >
 
 </audio>
 
 
 <button
-class="music-button"
-id="musicButton"
+    class="music-button"
+    id="musicButton"
+    aria-label="تشغيل أو إيقاف الموسيقى"
 >
 ♫
 </button>
 
 
 
-<!-- مؤشر السحب -->
+<!-- سهم السحب -->
 
 <div
-class="swipe-hint"
-id="swipeHint"
+    class="swipe-hint"
+    id="swipeHint"
 >
 
-<strong>↑</strong>
+    <strong>↑</strong>
 
-<span>
-اسحب للأعلى
-</span>
+    <span>
+        اسحب للأعلى
+    </span>
 
 </div>
 
 
 
-<!-- النقاط -->
+<!-- نقاط الصفحات -->
 
 <div
-class="dots"
-id="dots"
+    class="dots"
+    id="dots"
 >
 
-<span class="dot active"></span>
-<span class="dot"></span>
-<span class="dot"></span>
+    <span class="dot active"></span>
+
+    <span class="dot"></span>
+
+    <span class="dot"></span>
 
 </div>
 
@@ -526,108 +539,114 @@ id="dots"
 <script>
 
 const invitation =
-document.getElementById("invitation");
+    document.getElementById("invitation");
 
 const coverPage =
-document.getElementById("coverPage");
+    document.getElementById("coverPage");
 
 const openInvitation =
-document.getElementById("openInvitation");
+    document.getElementById("openInvitation");
 
 const weddingPage =
-document.getElementById("weddingPage");
+    document.getElementById("weddingPage");
 
 const music =
-document.getElementById("music");
+    document.getElementById("music");
 
 const musicButton =
-document.getElementById("musicButton");
+    document.getElementById("musicButton");
 
 const swipeHint =
-document.getElementById("swipeHint");
+    document.getElementById("swipeHint");
 
 const dotsBox =
-document.getElementById("dots");
+    document.getElementById("dots");
 
 const dots =
-document.querySelectorAll(".dot");
+    document.querySelectorAll(".dot");
+
+const mapButton =
+    document.getElementById("mapButton");
 
 let opened = false;
 
 
 /* =========================
-   فتح الظرف
+   فتح الدعوة
 ========================= */
 
 openInvitation.addEventListener(
-"click",
-function(){
+    "click",
+    function(){
 
-  if(opened){
-    return;
-  }
+        if(opened){
+            return;
+        }
 
-  opened = true;
-
-
-  /* نبضة الختم */
-
-  coverPage
-  .classList
-  .add("preparing");
+        opened = true;
 
 
-  /* الموسيقى */
+        /* نبضة على الختم */
 
-  music.volume=.45;
-
-  music.play().catch(function(){
-    console.log(
-      "تعذر تشغيل الموسيقى تلقائياً"
-    );
-  });
+        coverPage.classList.add(
+            "preparing"
+        );
 
 
-  /* بعد النبضة يبدأ الفتح */
+        /* تشغيل الموسيقى */
 
-  setTimeout(function(){
+        music.volume = 0.45;
 
-    coverPage
-    .classList
-    .add("open");
+        music.play().catch(function(){
 
-    document.body
-    .classList
-    .add("opened");
+            console.log(
+                "المتصفح منع تشغيل الموسيقى"
+            );
 
-    musicButton
-    .classList
-    .add("visible");
-
-    dotsBox
-    .classList
-    .add("visible");
-
-  },500);
+        });
 
 
-  /* الانتقال للعرس */
+        /* فتح الغلاف */
 
-  setTimeout(function(){
+        setTimeout(function(){
 
-    weddingPage
-    .scrollIntoView({
-      behavior:"smooth",
-      block:"start"
-    });
+            coverPage.classList.add(
+                "open"
+            );
 
-    swipeHint
-    .classList
-    .add("visible");
+            musicButton.classList.add(
+                "visible"
+            );
 
-  },1200);
+        },500);
 
-});
+
+        /* الانتقال عمودياً للصفحة الثانية */
+
+        setTimeout(function(){
+
+            weddingPage.scrollIntoView({
+
+                behavior:"smooth",
+
+                block:"start"
+
+            });
+
+
+            swipeHint.classList.add(
+                "visible"
+            );
+
+
+            dotsBox.classList.add(
+                "visible"
+            );
+
+        },1200);
+
+    }
+);
 
 
 /* =========================
@@ -635,109 +654,124 @@ function(){
 ========================= */
 
 musicButton.addEventListener(
-"click",
-function(){
+    "click",
+    function(){
 
-  if(music.paused){
+        if(music.paused){
 
-    music.play();
-    musicButton.textContent="♫";
+            music.play();
 
-  }else{
+            musicButton.textContent =
+                "♫";
 
-    music.pause();
-    musicButton.textContent="♪";
+        }
 
-  }
+        else{
 
-});
+            music.pause();
+
+            musicButton.textContent =
+                "♪";
+
+        }
+
+    }
+);
 
 
 /* =========================
-   تحديث الصفحات
+   متابعة الصفحة الحالية
 ========================= */
 
 invitation.addEventListener(
-"scroll",
-function(){
+    "scroll",
+    function(){
 
-  if(!opened){
-    return;
-  }
-
-
-  const pageHeight =
-  invitation.clientHeight;
+        if(!opened){
+            return;
+        }
 
 
-  const currentPage =
-  Math.round(
-    invitation.scrollTop
-    /
-    pageHeight
-  );
+        const pageHeight =
+            invitation.clientHeight;
 
 
-  dots.forEach(function(dot){
-
-    dot.classList
-    .remove("active");
-
-  });
-
-
-  if(currentPage >= 1){
-
-    const dotIndex =
-    currentPage - 1;
+        const currentPage =
+            Math.round(
+                invitation.scrollTop /
+                pageHeight
+            );
 
 
-    if(dots[dotIndex]){
+        dots.forEach(function(dot){
 
-      dots[dotIndex]
-      .classList
-      .add("active");
+            dot.classList.remove(
+                "active"
+            );
+
+        });
+
+
+        /*
+        الصفحة 1 = الغلاف
+        الصفحة 2 = العرس
+        الصفحة 3 = الحنة
+        الصفحة 4 = العد
+        */
+
+        const dotIndex =
+            currentPage - 1;
+
+
+        if(
+            dotIndex >= 0 &&
+            dots[dotIndex]
+        ){
+
+            dots[dotIndex]
+                .classList
+                .add("active");
+
+        }
+
+
+        /* إخفاء السهم بآخر صفحة */
+
+        if(currentPage >= 3){
+
+            swipeHint
+                .classList
+                .remove("visible");
+
+        }
+
+        else if(currentPage >= 1){
+
+            swipeHint
+                .classList
+                .add("visible");
+
+        }
 
     }
-
-  }
-
-
-  if(currentPage >= 3){
-
-    swipeHint
-    .classList
-    .remove("visible");
-
-  }
-
-  else if(currentPage >=1){
-
-    swipeHint
-    .classList
-    .add("visible");
-
-  }
-
-});
+);
 
 
 /* =========================
-   الموقع
+   فتح موقع القاعة
 ========================= */
 
-document
-.getElementById("mapButton")
-.addEventListener(
-"click",
-function(){
+mapButton.addEventListener(
+    "click",
+    function(){
 
-  window.open(
-    "https://www.google.com/maps/search/?api=1&query=Ramallah",
-    "_blank"
-  );
+        window.open(
+            "https://www.google.com/maps/search/?api=1&query=Ramallah",
+            "_blank"
+        );
 
-});
+    }
+);
 
 </script>
 
