@@ -2,579 +2,575 @@
 <html lang="ar" dir="rtl">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>دعوة محمد ووعد</title>
+  <title>دعوة محمد ووعد</title>
 
-<style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: #f4ecdf;
+      font-family: Arial, sans-serif;
+    }
 
-html,body{
-  width:100%;
-  min-height:100%;
-  background:#f4ecdf;
-  font-family:Arial,sans-serif;
-}
+    body {
+      overflow-x: hidden;
+    }
 
-body{
-  overflow-x:hidden;
-}
+    .invitation {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100vh;
+      margin: auto;
+      position: relative;
+      background: #f4ecdf;
+      overflow: hidden;
+    }
 
-/* إطار الدعوة */
-.invitation{
-  width:100%;
-  max-width:500px;
-  margin:auto;
-  min-height:100vh;
-  background:#f4ecdf;
-  position:relative;
-}
+    /* الصفحات */
+    .page {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+    }
 
-/* كل صفحة */
-.page{
-  display:none;
-  width:100%;
-  min-height:100vh;
-  position:relative;
-}
+    .page.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
 
-.page.active{
-  display:block;
-  animation:fade .5s ease;
-}
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
 
-@keyframes fade{
-  from{opacity:0;}
-  to{opacity:1;}
-}
+      to {
+        opacity: 1;
+      }
+    }
 
-/* الصور */
-.page img{
-  display:block;
-  width:100%;
-  height:auto;
-}
+    /* الصور */
+    .page-image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
 
-/* الغلاف */
-#coverPage{
-  cursor:pointer;
-}
+    /* الغلاف */
+    #coverPage {
+      cursor: pointer;
+    }
 
-.open-cover{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-  background:transparent;
-  cursor:pointer;
-}
+    .open-cover {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      z-index: 20;
+    }
 
-/* أزرار التنقل */
-.arrow{
-  position:fixed;
-  bottom:22px;
-  z-index:999;
+    /* الأسهم */
+    .arrow {
+      position: fixed;
+      bottom: 22px;
+      z-index: 1000;
 
-  width:48px;
-  height:48px;
+      width: 48px;
+      height: 48px;
 
-  border-radius:50%;
-  border:1px solid rgba(160,115,35,.45);
+      border-radius: 50%;
+      border: 1px solid rgba(160, 115, 35, 0.45);
 
-  background:rgba(255,248,235,.94);
-  color:#94681b;
+      background: rgba(255, 248, 235, 0.95);
+      color: #94681b;
 
-  font-size:27px;
+      font-size: 27px;
+      cursor: pointer;
 
-  display:none;
-  align-items:center;
-  justify-content:center;
+      display: none;
+      align-items: center;
+      justify-content: center;
 
-  cursor:pointer;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+    }
 
-  box-shadow:0 3px 12px rgba(0,0,0,.18);
-}
+    .arrow.visible {
+      display: flex;
+    }
 
-.arrow.visible{
-  display:flex;
-}
+    #prev {
+      right: 18px;
+    }
 
-#prev{
-  right:18px;
-}
+    #next {
+      left: 18px;
+    }
 
-#next{
-  left:18px;
-}
+    /* نقاط الصفحات */
+    .dots {
+      position: fixed;
+      bottom: 39px;
+      left: 50%;
+      transform: translateX(-50%);
 
-/* نقاط الصفحات */
-.dots{
-  position:fixed;
-  bottom:38px;
-  left:50%;
-  transform:translateX(-50%);
+      z-index: 1000;
 
-  display:none;
-  gap:8px;
+      display: none;
+      gap: 9px;
+    }
 
-  z-index:999;
-}
+    .dots.visible {
+      display: flex;
+    }
 
-.dots.visible{
-  display:flex;
-}
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d5bd91;
+      transition: 0.25s;
+    }
 
-.dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#d5bd91;
-}
+    .dot.active {
+      background: #986b1e;
+      transform: scale(1.4);
+    }
 
-.dot.active{
-  background:#986b1e;
-  transform:scale(1.35);
-}
+    /* الموسيقى */
+    .music-button {
+      position: fixed;
+      top: 18px;
+      right: 18px;
 
-/* زر الموسيقى */
-.music{
-  position:fixed;
-  top:18px;
-  right:18px;
+      z-index: 1000;
 
-  z-index:999;
+      width: 46px;
+      height: 46px;
 
-  width:46px;
-  height:46px;
+      border-radius: 50%;
+      border: 1px solid #c89b4c;
 
-  border-radius:50%;
-  border:1px solid #c89b4c;
+      background: rgba(255, 248, 235, 0.95);
+      color: #966b20;
 
-  background:rgba(255,248,235,.94);
-  color:#966b20;
+      font-size: 21px;
+      cursor: pointer;
 
-  font-size:21px;
+      display: none;
+      align-items: center;
+      justify-content: center;
 
-  display:none;
-  align-items:center;
-  justify-content:center;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    }
 
-  cursor:pointer;
-}
+    .music-button.visible {
+      display: flex;
+    }
 
-.music.visible{
-  display:flex;
-}
+    /* زر الموقع الشفاف */
+    #countdownPage {
+      position: relative;
+    }
 
-/* صفحة الموقع */
-#countdownPage{
-  position:relative;
-}
+    .map-button {
+      position: absolute;
 
-/* زر شفاف فوق زر الموقع الموجود بالصورة */
-.map-button{
-  position:absolute;
+      left: 27%;
+      width: 46%;
 
-  left:27%;
-  width:46%;
+      top: 72%;
+      height: 9%;
 
-  top:72%;
-  height:9%;
+      z-index: 30;
 
-  border:0;
-  background:transparent;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
 
-  cursor:pointer;
-  z-index:30;
-}
+    @media (min-width: 501px) {
+      body {
+        background: #eee8df;
+      }
 
-/* تحسين العرض على الكمبيوتر */
-@media(min-width:501px){
-
-  body{
-    background:#eee8df;
-  }
-
-  .invitation{
-    box-shadow:0 0 25px rgba(0,0,0,.08);
-  }
-
-}
-
-</style>
+      .invitation {
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.08);
+      }
+    }
+  </style>
 </head>
 
 
 <body>
 
-<div class="invitation">
+  <main class="invitation">
 
 
-<!-- =====================
-     1 الغلاف
-===================== -->
+    <!-- الصفحة 1: الغلاف -->
 
-<section class="page active" id="coverPage">
+    <section class="page active" id="coverPage">
 
-<img
-src="cover.png"
-alt="دعوة محمد ووعد">
+      <img
+        src="cover.png"
+        class="page-image"
+        alt="غلاف دعوة محمد ووعد"
+      >
 
-<button
-class="open-cover"
-id="openCover"
-aria-label="فتح الدعوة">
-</button>
+      <button
+        class="open-cover"
+        id="openCover"
+        aria-label="فتح الدعوة"
+      ></button>
 
-</section>
+    </section>
 
 
+    <!-- الصفحة 2: العرس -->
 
-<!-- =====================
-     2 العرس
-===================== -->
+    <section class="page" id="weddingPage">
 
-<section class="page" id="weddingPage">
+      <img
+        src="wedding.png"
+        class="page-image"
+        alt="حفل زفاف محمد ووعد"
+      >
 
-<img
-src="wedding.png"
-alt="حفل زفاف محمد ووعد">
+    </section>
 
-</section>
 
+    <!-- الصفحة 3: الحنة -->
 
+    <section class="page" id="hennaPage">
 
-<!-- =====================
-     3 الحنة
-===================== -->
+      <img
+        src="حناء.png"
+        class="page-image"
+        alt="ليلة الحنة"
+      >
 
-<section class="page" id="hennaPage">
+    </section>
 
-<img
-src="henna.png"
-alt="ليلة الحنة">
 
-</section>
+    <!-- الصفحة 4: الموقع والعد التنازلي -->
 
+    <section class="page" id="countdownPage">
 
+      <img
+        src="countdown.png"
+        class="page-image"
+        alt="العد التنازلي وموقع العرس"
+      >
 
-<!-- =====================
-     4 الموقع والعد
-===================== -->
+      <button
+        class="map-button"
+        id="mapButton"
+        aria-label="فتح موقع العرس"
+      ></button>
 
-<section class="page" id="countdownPage">
+    </section>
 
-<img
-src="countdown.png"
-alt="العد التنازلي وموقع العرس">
 
-<button
-class="map-button"
-id="mapButton"
-aria-label="فتح الموقع">
-</button>
+    <!-- الموسيقى -->
 
-</section>
+    <audio id="music" loop preload="auto">
 
+      <source
+        src="موسيقى.mp3"
+        type="audio/mpeg"
+      >
 
+    </audio>
 
-<!-- الموسيقى -->
 
-<audio id="music" loop preload="auto">
-<source src="music.mp3" type="audio/mpeg">
-</audio>
+    <!-- زر الموسيقى -->
 
+    <button
+      class="music-button"
+      id="musicButton"
+      aria-label="تشغيل أو إيقاف الموسيقى"
+    >
+      ♫
+    </button>
 
-<button
-class="music"
-id="musicButton"
-aria-label="الموسيقى">
-♫
-</button>
 
+    <!-- زر السابق -->
 
+    <button
+      class="arrow"
+      id="prev"
+      aria-label="الصفحة السابقة"
+    >
+      ›
+    </button>
 
-<!-- الأسهم -->
 
-<button
-class="arrow"
-id="prev"
-aria-label="السابق">
-›
-</button>
+    <!-- زر التالي -->
 
-<button
-class="arrow"
-id="next"
-aria-label="التالي">
-‹
-</button>
+    <button
+      class="arrow"
+      id="next"
+      aria-label="الصفحة التالية"
+    >
+      ‹
+    </button>
 
 
+    <!-- النقاط -->
 
-<!-- نقاط الصفحات -->
+    <div class="dots" id="dots">
 
-<div class="dots" id="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
 
-<span class="dot active"></span>
-<span class="dot"></span>
-<span class="dot"></span>
+    </div>
 
-</div>
 
+  </main>
 
-</div>
 
+  <script>
 
+    /* الصفحات */
 
-<script>
+    const pages = [
+      document.getElementById("coverPage"),
+      document.getElementById("weddingPage"),
+      document.getElementById("hennaPage"),
+      document.getElementById("countdownPage")
+    ];
 
-/* الصفحات */
 
-const pages = [
-document.getElementById("coverPage"),
-document.getElementById("weddingPage"),
-document.getElementById("hennaPage"),
-document.getElementById("countdownPage")
-];
+    let currentPage = 0;
 
-let current = 0;
 
+    /* العناصر */
 
-/* العناصر */
+    const openCover =
+      document.getElementById("openCover");
 
-const openCover =
-document.getElementById("openCover");
+    const prevButton =
+      document.getElementById("prev");
 
-const prev =
-document.getElementById("prev");
+    const nextButton =
+      document.getElementById("next");
 
-const next =
-document.getElementById("next");
+    const dotsBox =
+      document.getElementById("dots");
 
-const dotsBox =
-document.getElementById("dots");
+    const dots =
+      document.querySelectorAll(".dot");
 
-const dots =
-document.querySelectorAll(".dot");
+    const music =
+      document.getElementById("music");
 
-const music =
-document.getElementById("music");
+    const musicButton =
+      document.getElementById("musicButton");
 
-const musicButton =
-document.getElementById("musicButton");
 
+    /* فتح الدعوة */
 
-/* =====================
-   فتح الدعوة
-===================== */
+    openCover.addEventListener("click", function () {
 
-openCover.addEventListener("click",function(){
+      showPage(1);
 
-  showPage(1);
+      prevButton.classList.add("visible");
+      nextButton.classList.add("visible");
+      dotsBox.classList.add("visible");
+      musicButton.classList.add("visible");
 
-  prev.classList.add("visible");
-  next.classList.add("visible");
-  dotsBox.classList.add("visible");
-  musicButton.classList.add("visible");
+      music.volume = 0.45;
 
-  music.volume = 0.45;
+      music.play().catch(function () {
+        console.log("المتصفح منع تشغيل الموسيقى تلقائياً");
+      });
 
-  music.play().catch(function(){
-    console.log("المتصفح منع التشغيل التلقائي");
-  });
+    });
 
-});
 
+    /* عرض الصفحة */
 
-/* =====================
-   عرض صفحة
-===================== */
+    function showPage(pageNumber) {
 
-function showPage(number){
+      pages.forEach(function (page) {
+        page.classList.remove("active");
+      });
 
-  pages.forEach(function(page){
-    page.classList.remove("active");
-  });
 
-  pages[number].classList.add("active");
+      pages[pageNumber].classList.add("active");
 
-  current = number;
+      currentPage = pageNumber;
 
-  window.scrollTo(0,0);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
-  updateControls();
+      updateControls();
 
-}
-
-
-/* =====================
-   التالي
-===================== */
-
-next.addEventListener("click",function(){
-
-  if(current < 3){
-    showPage(current + 1);
-  }
-
-});
-
-
-/* =====================
-   السابق
-===================== */
-
-prev.addEventListener("click",function(){
-
-  if(current > 1){
-    showPage(current - 1);
-  }
-
-});
-
-
-/* =====================
-   تحديث الأسهم والنقاط
-===================== */
-
-function updateControls(){
-
-  if(current === 1){
-    prev.style.visibility="hidden";
-  }else{
-    prev.style.visibility="visible";
-  }
-
-
-  if(current === 3){
-    next.style.visibility="hidden";
-  }else{
-    next.style.visibility="visible";
-  }
-
-
-  dots.forEach(function(dot){
-    dot.classList.remove("active");
-  });
-
-
-  if(current >= 1){
-
-    const index = current - 1;
-
-    if(dots[index]){
-      dots[index].classList.add("active");
     }
 
-  }
 
-}
+    /* التالي */
 
+    nextButton.addEventListener("click", function () {
 
-/* =====================
-   الموسيقى
-===================== */
+      if (currentPage < pages.length - 1) {
+        showPage(currentPage + 1);
+      }
 
-musicButton.addEventListener("click",function(){
-
-  if(music.paused){
-
-    music.play();
-
-    musicButton.innerHTML="♫";
-
-  }else{
-
-    music.pause();
-
-    musicButton.innerHTML="♪";
-
-  }
-
-});
+    });
 
 
-/* =====================
-   رابط الموقع
-===================== */
+    /* السابق */
 
-document
-.getElementById("mapButton")
-.addEventListener("click",function(){
+    prevButton.addEventListener("click", function () {
 
-  window.open(
-  "https://www.google.com/maps/search/?api=1&query=Ramallah",
-  "_blank"
-  );
+      if (currentPage > 1) {
+        showPage(currentPage - 1);
+      }
 
-});
+    });
 
 
-/* =====================
-   السحب بالموبايل
-===================== */
+    /* تحديث الأسهم والنقاط */
 
-let startX = 0;
+    function updateControls() {
 
-document.addEventListener(
-"touchstart",
-function(e){
-
-  startX =
-  e.changedTouches[0].screenX;
-
-},
-{passive:true}
-);
+      if (currentPage === 1) {
+        prevButton.style.visibility = "hidden";
+      } else {
+        prevButton.style.visibility = "visible";
+      }
 
 
-document.addEventListener(
-"touchend",
-function(e){
-
-  if(current === 0){
-    return;
-  }
-
-  const endX =
-  e.changedTouches[0].screenX;
-
-  const distance =
-  endX - startX;
+      if (currentPage === pages.length - 1) {
+        nextButton.style.visibility = "hidden";
+      } else {
+        nextButton.style.visibility = "visible";
+      }
 
 
-  if(Math.abs(distance) < 60){
-    return;
-  }
+      dots.forEach(function (dot) {
+        dot.classList.remove("active");
+      });
 
 
-  if(distance < 0){
+      const dotNumber = currentPage - 1;
 
-    if(current < 3){
-      showPage(current + 1);
+      if (dots[dotNumber]) {
+        dots[dotNumber].classList.add("active");
+      }
+
     }
 
-  }else{
 
-    if(current > 1){
-      showPage(current - 1);
-    }
+    /* تشغيل وإيقاف الموسيقى */
 
-  }
+    musicButton.addEventListener("click", function () {
 
-},
-{passive:true}
-);
+      if (music.paused) {
 
-</script>
+        music.play();
+
+        musicButton.textContent = "♫";
+
+      } else {
+
+        music.pause();
+
+        musicButton.textContent = "♪";
+
+      }
+
+    });
+
+
+    /* فتح الموقع */
+
+    document
+      .getElementById("mapButton")
+      .addEventListener("click", function () {
+
+        window.open(
+          "https://www.google.com/maps/search/?api=1&query=Ramallah",
+          "_blank"
+        );
+
+      });
+
+
+    /* السحب بالموبايل */
+
+    let touchStartX = 0;
+
+
+    document.addEventListener(
+      "touchstart",
+      function (event) {
+
+        touchStartX =
+          event.changedTouches[0].screenX;
+
+      },
+      { passive: true }
+    );
+
+
+    document.addEventListener(
+      "touchend",
+      function (event) {
+
+        if (currentPage === 0) {
+          return;
+        }
+
+
+        const touchEndX =
+          event.changedTouches[0].screenX;
+
+
+        const difference =
+          touchEndX - touchStartX;
+
+
+        if (Math.abs(difference) < 60) {
+          return;
+        }
+
+
+        if (difference < 0) {
+
+          if (currentPage < pages.length - 1) {
+            showPage(currentPage + 1);
+          }
+
+        } else {
+
+          if (currentPage > 1) {
+            showPage(currentPage - 1);
+          }
+
+        }
+
+      },
+      { passive: true }
+    );
+
+  </script>
 
 </body>
+
 </html>
